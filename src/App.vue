@@ -1,17 +1,38 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <h1 class="app-title">Github repository list</h1>
+    <RepoList :repos="repos" />
+    <footer>
+      <div className='footer'>
+          Built with&nbsp;
+          <span role='img' aria-label='love'>
+            💚
+          </span>&nbsp;
+          by Emmanuel Ikwuoma
+        </div>
+    </footer>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import RepoList from './components/RepoList.vue'
 
 export default {
   name: 'App',
+  data() {
+    return {
+      repos: null
+    }
+  },
   components: {
-    HelloWorld
+    RepoList
+  },
+  created() {
+    const url = 'https://api.github.com/users/nuel-ikwuoma/repos'
+    fetch(url)
+      .then(response => response.json())
+      .then(repos => this.repos = repos)
+      .catch(console.error)
   }
 }
 </script>
@@ -24,5 +45,16 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  box-sizing: border-box;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-family: 'Amiri', serif;
+  overflow: hidden;
+}
+
+h1 {
+  text-transform: capitalize;
 }
 </style>
