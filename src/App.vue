@@ -15,6 +15,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import RepoList from './components/RepoList.vue'
 
 export default {
@@ -29,9 +30,8 @@ export default {
   },
   created() {
     const url = 'https://api.github.com/users/nuel-ikwuoma/repos'
-    fetch(url)
-      .then(response => response.json())
-      .then(repos => this.repos = repos)
+    axios.get(url)
+      .then(response => this.repos = response.data)
       .catch(console.error)
   }
 }
